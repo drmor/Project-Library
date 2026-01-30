@@ -1,6 +1,6 @@
 const newBtn = document.getElementById("new");
 const myLibrary = [];
-const inputLabels = ["Title: ", "Author: ", "Number of pages: "];
+const inputLabels = ["Title: ", "Author: ", "Number of pages: ", "Status: "];
 const inputValues = ["title", "author", "pages"];
 let amountOfBooks = -1;
 
@@ -90,11 +90,51 @@ function addNewBook(){
 function displayNewBook(){
     const keys = Object.keys(myLibrary[amountOfBooks]); 
     const bookCard = document.createElement("div");
-    bookCard.classList.add("card")
-    document.body.appendChild(bookCard)
-    for (let i = 0; i < 3; i++) {
-        const bookInfo = document.createElement("p");
-        bookInfo.textContent = myLibrary[amountOfBooks][keys[i]];
-        bookCard.appendChild(bookInfo);
+    const readToggleBtn = document.createElement("button");
+    const removeBtn = document.createElement("button");
+    readToggleBtn.textContent = "READ";
+    removeBtn.textContent = "REMOVE";
+    readToggleBtn.classList.add("read");
+    removeBtn.classList.add("remove");
+    bookCard.classList.add("card");
+    readToggleBtn.setAttribute("data-index", amountOfBooks);
+    document.body.appendChild(bookCard);
+    function displayValues(){
+        for (let i = 0; i < 4; i++) {
+            const bookInfo = document.createElement("p");
+            if (myLibrary[amountOfBooks].title == ''){
+                myLibrary[amountOfBooks].title = "none";
+            } else if (myLibrary[amountOfBooks].author == ''){
+                myLibrary[amountOfBooks].author = "none";
+            } else if(myLibrary[amountOfBooks].pages == ''){
+                myLibrary[amountOfBooks].pages = "none";
+            } else if(myLibrary[amountOfBooks].check == true){
+                myLibrary[amountOfBooks].check = "readed"
+            } else if(myLibrary[amountOfBooks].check == false){
+                myLibrary[amountOfBooks].check = "not readed"
+            }
+            bookInfo.textContent = inputLabels[i] + myLibrary[amountOfBooks][keys[i]];
+            bookCard.appendChild(bookInfo);
+            
+        };
+        bookCard.appendChild(readToggleBtn);
+        bookCard.appendChild(removeBtn);
     };
-}
+    displayValues();
+    removeBtn.addEventListener("click", () =>{
+        myLibrary.pop();
+        if(bookCard){
+            bookCard.remove();
+        };
+        amountOfBooks -= 1;
+    });
+    readToggleBtn.addEventListener("click", () =>{
+        if (myLibrary[readToggleBtn.dataset.index][keys[3]] == "readed"){ 
+            myLibrary[readToggleBtn.dataset.index].check = "not readed";
+        } else if (myLibrary[readToggleBtn.dataset.index][keys[3]] == "not readed"){ 
+            myLibrary[readToggleBtn.dataset.index].check = "readed";
+        } else{ 
+            return; 
+        };
+    });
+};
