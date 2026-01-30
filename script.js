@@ -1,6 +1,7 @@
 const bookCard = document.querySelector(".card");
 const newBtn = document.getElementById("new");
 const myLibrary = [];
+const inputValues = ["Title: ", "Author: ", "Number of pages: "];
 
 function Book(title, author, pages){
     this.title = title;
@@ -48,5 +49,25 @@ function addNewBook(){
             };
         });
     };
+    function createForm(){
+        const newBookForm = document.createElement("form");
+        const readBtn = document.createElement("input");
+        const checkLabel = document.createElement("label");
+        checkLabel.textContent = "Have you read it? ";
+        readBtn.setAttribute("type", "checkbox");
+        newBookForm.setAttribute("method", "get");
+        popup.appendChild(newBookForm);
+        for (let i = 0; i < 3; i++) {
+            const input = document.createElement("input");
+            const label = document.createElement("label");
+            input.setAttribute("type", "text");
+            label.textContent = inputValues[i];
+            newBookForm.appendChild(label);
+            newBookForm.appendChild(input);
+        };
+        popup.appendChild(checkLabel);
+        popup.appendChild(readBtn);
+    };
+    createForm();
     closeWindow();
 };
