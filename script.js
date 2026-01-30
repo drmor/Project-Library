@@ -2,11 +2,14 @@ const newBtn = document.getElementById("new");
 const myLibrary = [];
 const inputLabels = ["Title: ", "Author: ", "Number of pages: "];
 const inputValues = ["title", "author", "pages"];
+let amountOfBooks = -1;
 
-function Book(title, author, pages){
+function Book(title, author, pages, check, uuid){
     this.title = title;
     this.author = author;
     this.pages = pages;
+    this.check = check;
+    this.uuid = uuid;
 };
 
 newBtn.addEventListener('click', () => {
@@ -17,7 +20,9 @@ function getValues(){
     const bookTitle = document.getElementById("title").value;
     const bookAuthor = document.getElementById("author").value;
     const bookPages = document.getElementById("pages").value;
-    const book = new Book(bookTitle, bookAuthor, bookPages);
+    const readCheck = document.getElementById("check").checked;
+    let uuid = self.crypto.randomUUID();
+    const book = new Book(bookTitle, bookAuthor, bookPages, readCheck, uuid);
     myLibrary.push(book);
 };
 
@@ -38,8 +43,9 @@ function addNewBook(){
             };
         });
         confirmBtn.addEventListener('click', () => {
-           getValues();
-           if(popup){
+            amountOfBooks += 1;
+            getValues();
+            if(popup){
                 popup.remove();
             };
             displayNewBook();
@@ -82,7 +88,13 @@ function addNewBook(){
 };
 
 function displayNewBook(){
+    const keys = Object.keys(myLibrary[amountOfBooks]); 
     const bookCard = document.createElement("div");
     bookCard.classList.add("card")
     document.body.appendChild(bookCard)
+    for (let i = 0; i < 3; i++) {
+        const bookInfo = document.createElement("p");
+        bookInfo.textContent = myLibrary[amountOfBooks][keys[i]];
+        bookCard.appendChild(bookInfo);
+    };
 }
