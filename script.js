@@ -41,6 +41,7 @@ function addNewBook(){
             if(popup){
                 popup.remove();
             };
+            document.body.style.pointerEvents = "auto";
         });
         confirmBtn.addEventListener('click', () => {
             amountOfBooks += 1;
@@ -49,6 +50,7 @@ function addNewBook(){
                 popup.remove();
             };
             displayNewBook();
+            document.body.style.pointerEvents = "auto";
         });
     };
     function setAttributes(el, attrs) {
@@ -57,16 +59,19 @@ function addNewBook(){
         }
     }
     function createForm(){
+        const container = document.createElement("div");
         const newBookForm = document.createElement("form");
         const readBtn = document.createElement("input");
         const checkLabel = document.createElement("label");
+        container.classList.add("container");
         checkLabel.textContent = "Have you read it? ";
-        checkLabel.setAttribute("for", "check")
+        checkLabel.setAttribute("for", "check");
         readBtn.setAttribute("type", "checkbox");
         readBtn.setAttribute("id", "check");
         readBtn.setAttribute("name", "check");
         newBookForm.setAttribute("method", "get");
-        popup.appendChild(newBookForm);
+        popup.appendChild(container);
+        container.appendChild(newBookForm);
         for (let i = 0; i < 3; i++) {
             const input = document.createElement("input");
             const label = document.createElement("label");
@@ -80,11 +85,13 @@ function addNewBook(){
             newBookForm.appendChild(label);
             newBookForm.appendChild(input);
         };
-        popup.appendChild(checkLabel);
-        popup.appendChild(readBtn);
+        container.appendChild(checkLabel);
+        container.appendChild(readBtn);
     };
     createForm();
     closeWindow();
+    document.body.style.pointerEvents = "none";
+    popup.style.pointerEvents = "auto";
 };
 
 function displayNewBook(){
@@ -108,11 +115,7 @@ function displayNewBook(){
                 myLibrary[amountOfBooks].author = "none";
             } else if(myLibrary[amountOfBooks].pages == ''){
                 myLibrary[amountOfBooks].pages = "none";
-            } else if(myLibrary[amountOfBooks].check == true){
-                myLibrary[amountOfBooks].check = "readed"
-            } else if(myLibrary[amountOfBooks].check == false){
-                myLibrary[amountOfBooks].check = "not readed"
-            }
+            };
             bookInfo.textContent = inputLabels[i] + myLibrary[amountOfBooks][keys[i]];
             bookCard.appendChild(bookInfo);
         };
