@@ -4,9 +4,6 @@ body{
     flex-wrap: wrap;
     padding-top: 5rem;
 }
-p{
-    margin: 14px auto 14px;
-}
 #new{
     position: absolute;
     top: 2.5%;
@@ -53,4 +50,10 @@ button{
 }
 .remove{
     background-color: lightcoral;
+}
+#red{
+    background-color: red;
+}
+#green{
+    background-color: green;
 }

@@ -1,6 +1,6 @@
 const newBtn = document.getElementById("new");
 const myLibrary = [];
-const inputLabels = ["Title: ", "Author: ", "Number of pages: ", "Status: "];
+const inputLabels = ["Title: ", "Author: ", "Number of pages: "];
 const inputValues = ["title", "author", "pages"];
 let amountOfBooks = -1;
 
@@ -100,7 +100,7 @@ function displayNewBook(){
     readToggleBtn.setAttribute("data-index", amountOfBooks);
     document.body.appendChild(bookCard);
     function displayValues(){
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
             const bookInfo = document.createElement("p");
             if (myLibrary[amountOfBooks].title == ''){
                 myLibrary[amountOfBooks].title = "none";
@@ -115,10 +115,10 @@ function displayNewBook(){
             }
             bookInfo.textContent = inputLabels[i] + myLibrary[amountOfBooks][keys[i]];
             bookCard.appendChild(bookInfo);
-            
         };
         bookCard.appendChild(readToggleBtn);
         bookCard.appendChild(removeBtn);
+        changeBtnAppearance();
     };
     displayValues();
     removeBtn.addEventListener("click", () =>{
@@ -128,11 +128,20 @@ function displayNewBook(){
         };
         amountOfBooks -= 1;
     });
+    function changeBtnAppearance(){
+        if (myLibrary[readToggleBtn.dataset.index][keys[3]] == true){
+            readToggleBtn.id= "green";
+        } else if (myLibrary[readToggleBtn.dataset.index][keys[3]] == false){
+            readToggleBtn.id = "red";
+        };
+    };
     readToggleBtn.addEventListener("click", () =>{
-        if (myLibrary[readToggleBtn.dataset.index][keys[3]] == "readed"){ 
-            myLibrary[readToggleBtn.dataset.index].check = "not readed";
-        } else if (myLibrary[readToggleBtn.dataset.index][keys[3]] == "not readed"){ 
-            myLibrary[readToggleBtn.dataset.index].check = "readed";
+        if (myLibrary[readToggleBtn.dataset.index][keys[3]] == true){ 
+            myLibrary[readToggleBtn.dataset.index].check = false;
+            changeBtnAppearance();
+        } else if (myLibrary[readToggleBtn.dataset.index][keys[3]] == false){ 
+            myLibrary[readToggleBtn.dataset.index].check = true;
+            changeBtnAppearance();
         } else{ 
             return; 
         };
